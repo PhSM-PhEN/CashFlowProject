@@ -38,7 +38,7 @@ Para obter uma cópia local funcionando, siga estes passos simples.
 
 1. Clone o repositório: 
     ```sh
-    git clone https://github.com/PhSM-PhEN/cashflow.git
+    git clone https://github.com/PhSM-PhEN/CashFlowProject/cashflow.git
     ```
 2. Preencha as informações no arquivo `appsettings.Development.Json`.
 3. Execute a API e aproveite o seu teste.
