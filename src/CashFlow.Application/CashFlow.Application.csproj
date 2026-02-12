@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="UseCases\ToExpenses\Report\Pdf\Fonts\Raleway-Black.ttf" />
+    <None Remove="UseCases\ToExpenses\Report\Pdf\Fonts\Raleway-Regular.ttf" />
+    <None Remove="UseCases\ToExpenses\Report\Pdf\Fonts\Roboto_Condensed-Black.ttf" />
+    <None Remove="UseCases\ToExpenses\Report\Pdf\Fonts\Roboto_SemiCondensed-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="UseCases\ToExpenses\Report\Pdf\Fonts\Raleway-Black.ttf" />
+    <EmbeddedResource Include="UseCases\ToExpenses\Report\Pdf\Fonts\Raleway-Regular.ttf" />
+    <EmbeddedResource Include="UseCases\ToExpenses\Report\Pdf\Fonts\Roboto_Condensed-Black.ttf" />
+    <EmbeddedResource Include="UseCases\ToExpenses\Report\Pdf\Fonts\Roboto_SemiCondensed-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="PDFsharp-MigraDoc" Version="6.2.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CashFlow.Communication\CashFlow.Communication.csproj" />
+    <ProjectReference Include="..\CashFlow.Domain\CashFlow.Domain.csproj" />
+    <ProjectReference Include="..\CashFlow.Exception\CashFlow.Exception.csproj" />
+  </ItemGroup>
+
+</Project>
