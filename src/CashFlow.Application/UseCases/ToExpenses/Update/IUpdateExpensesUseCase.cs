@@ -1,4 +1,4 @@
-﻿using CashFlow.Communication.Request;
+﻿using CashFlow.Communication.Request.ToExpenses;
 using CashFlow.Communication.Responses;
 using CashFlow.Domain.Entities;
 

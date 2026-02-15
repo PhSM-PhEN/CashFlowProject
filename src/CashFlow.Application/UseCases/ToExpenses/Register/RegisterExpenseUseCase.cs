@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CashFlow.Communication.Request;
-using CashFlow.Communication.Responses;
+using CashFlow.Communication.Request.ToExpenses;
+using CashFlow.Communication.Responses.ToExpenses;
 using CashFlow.Domain.Entities;
 using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expense;

@@ -3,8 +3,9 @@ using CashFlow.Application.UseCases.ToExpenses.GetAll;
 using CashFlow.Application.UseCases.ToExpenses.GetById;
 using CashFlow.Application.UseCases.ToExpenses.Register;
 using CashFlow.Application.UseCases.ToExpenses.Update;
-using CashFlow.Communication.Request;
+using CashFlow.Communication.Request.ToExpenses;
 using CashFlow.Communication.Responses;
+using CashFlow.Communication.Responses.ToExpenses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.API.Controllers

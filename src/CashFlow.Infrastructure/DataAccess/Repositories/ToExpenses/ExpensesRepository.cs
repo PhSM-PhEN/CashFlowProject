@@ -1,9 +1,8 @@
-﻿
-using CashFlow.Domain.Entities;
+﻿using CashFlow.Domain.Entities;
 using CashFlow.Domain.Repositories.Expense;
 using Microsoft.EntityFrameworkCore;
 
-namespace CashFlow.Infrastructure.DataAccess.Repositories
+namespace CashFlow.Infrastructure.DataAccess.Repositories.ToExpenses
 {
     // deixar internal para não expor a implementação fora do projeto de infraestrutura
     internal class ExpensesRepository(CashFlowDbContext dbContext) : IExpensesReadOnlyRepository, IExpensesWriteOnlyRespository, IExpensesUpdateOnlyRepository

@@ -9,7 +9,9 @@ namespace CashFlow.Infrastructure.DataAccess
     {
         public DbSet<Expenses> Expenses { get; set; }
 
-        
+        public DbSet<User> Users { get; set; }
+
+
     }
 }
 

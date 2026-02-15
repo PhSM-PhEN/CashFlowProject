@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using CashFlow.Communication.Request;
-using CashFlow.Communication.Responses;
+using CashFlow.Communication.Request.ToExpenses;
+using CashFlow.Communication.Request.ToUser;
+using CashFlow.Communication.Responses.ToExpenses;
 using CashFlow.Domain.Entities;
 
 namespace CashFlow.Application.AutoMapper
@@ -12,12 +13,15 @@ namespace CashFlow.Application.AutoMapper
             RequestToEntitie();
             EntitieToResponse();
 
+
         }
 
 
         private void RequestToEntitie()
         {
             CreateMap<RequestExpenseJson, Expenses>();
+            CreateMap<RequestRegisterUserJson, User>()
+                .ForMember(dest => dest.Password, config => config.Ignore());
 
 
         }
@@ -26,6 +30,7 @@ namespace CashFlow.Application.AutoMapper
             CreateMap<Expenses, ResponseRegisterExpenseJson>(); // Map from Expenses to ResponseRegisterExpenseJson
             CreateMap<Expenses, ResponseShortExpenseJson>(); // Map from Expenses to ResponseShortExpenseJson
             CreateMap<Expenses, ResponseExpenseJson>(); // Map from Expenses to ResponseExpenseJson
+            
         }
     }
 }
