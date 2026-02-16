@@ -3,6 +3,9 @@ using CashFlow.API.Middleware;
 using CashFlow.Application.UseCases.ToExpenses;
 using CashFlow.Infrastructure;
 using CashFlow.Infrastructure.Migrations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +20,35 @@ builder.Services.AddControllers();
 //swagger
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "JWT Authorization header using the Bearer scheme. Example: , Bearer [space] token",
+        In = ParameterLocation.Header,
+        Scheme = "Bearer",
+        Type = SecuritySchemeType.ApiKey
+    });
+    config.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            },
+            Scheme = "outh2",
+            Name = "Bearer",
+            In = ParameterLocation.Header
+            },
+            new  List<string>()
+        }
+
+    });
+});
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));//adiciona o filtro globalmente 
 
@@ -25,6 +56,25 @@ builder.Services.AddRouting(config => config.LowercaseUrls = true);//configura a
 builder.Services.AddInfrastructureServices(builder.Configuration);//adiciona os serviços de infraestrutura ao contêiner de injeção de dependência
 builder.Services.AddApplicationServices();//adiciona os serviços de aplicação ao contêiner de injeção de dependência
 
+
+builder.Services.AddAuthentication(config =>
+{
+    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+}).AddJwtBearer(config =>
+{
+    config.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ClockSkew = new TimeSpan(0),
+        IssuerSigningKey = new SymmetricSecurityKey(
+            System.Text.Encoding.UTF8.GetBytes(
+                builder.Configuration.GetValue<string>("Settings:Jwt:SigningKey")))
+
+    };
+});//adiciona os serviços de autenticação ao contêiner de injeção de dependência
 
 var app = builder.Build();
 
@@ -40,6 +90,7 @@ app.UseMiddleware<CultureInfoMiddleware>();//adiciona o middleware ao pipeline d
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

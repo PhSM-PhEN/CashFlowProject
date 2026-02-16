@@ -3,5 +3,7 @@
     public interface IUserReadOnlyRespository
     {
         Task<bool> ExistsByEmail(string email);
+
+        Task<Entities.User?>GetUserByEmail(string email);
     }
 }
