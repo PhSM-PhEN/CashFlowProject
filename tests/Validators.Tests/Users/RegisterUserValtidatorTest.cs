@@ -1,7 +1,6 @@
 ﻿using CashFlow.Application.UseCases.ToUser.Register;
 using CashFlow.Exception.ExceptionBase;
 using CommonTestUtilities.Resquests;
-using Microsoft.AspNetCore.Identity;
 using Shouldly;
 
 namespace Validators.Tests.Users

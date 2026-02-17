@@ -65,7 +65,7 @@ namespace UseCase.Tests.ToUsers.Register
             var mapper = MappperBuilder.Build();
             var unitofwork = UnitOfWorkBuilder.Build();
             var writeRespository = UserWriteOnlyRepositoryBuilder.Build();
-            var passwordEncripter = PasswordEcripterBuilder.Build();
+            var passwordEncripter = new PasswordEcrypterBuilder().Build();
             var token = JwtTokenGeneretorBuilder.Build();
             var userReadOnlyRepository = new UserReadOnlyRepositoryBuilder();
 

@@ -1,4 +1,6 @@
-﻿using CashFlow.Domain.Repositories.User;
+﻿
+using CashFlow.Domain.Entities;
+using CashFlow.Domain.Repositories.User;
 using Moq;
 
 namespace CommonTestUtilities.Repositories
@@ -14,6 +16,11 @@ namespace CommonTestUtilities.Repositories
         public void ExistByEmail(string email)
         {
             _repository.Setup(x => x.ExistByEmail(email)).ReturnsAsync(true);
+        }
+        public UserReadOnlyRepositoryBuilder GetUserByEmail(User user)
+        {
+            _repository.Setup(userRepository => userRepository.GetUserByEmail(user.Email)).ReturnsAsync(user);
+            return this;
         }
         public  IUserReadOnlyRespository Build() => _repository.Object;
 
