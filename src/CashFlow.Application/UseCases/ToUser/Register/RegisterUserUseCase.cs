@@ -45,7 +45,7 @@ namespace CashFlow.Application.UseCases.ToUser.Register
             var validator = new UserValidator();
             var result = validator.Validate(request);
 
-            var emaiExist = await _userRespository.ExistsByEmail(request.Email);
+            var emaiExist = await _userRespository.ExistByEmail(request.Email);
 
 
             if (emaiExist) 

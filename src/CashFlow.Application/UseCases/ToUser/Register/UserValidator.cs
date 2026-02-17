@@ -11,8 +11,11 @@ namespace CashFlow.Application.UseCases.ToUser.Register
             RuleFor(user => user.Name)
                .NotEmpty().WithMessage(ResourceErrorMessages.NAME_EMPTY);
             RuleFor(user => user.Email)
-                .NotEmpty().WithMessage(ResourceErrorMessages.EMAIL_EMPTY)
-                .EmailAddress().WithMessage(ResourceErrorMessages.EMAIL_INVALID);
+                .NotEmpty()
+                .WithMessage(ResourceErrorMessages.EMAIL_EMPTY)
+                .EmailAddress()
+                .When(user => string.IsNullOrEmpty(user.Email) == false, ApplyConditionTo.CurrentValidator)
+                .WithMessage(ResourceErrorMessages.EMAIL_INVALID);
 
             RuleFor(user => user.Password).SetValidator(new PasswordValidator<RequestRegisterUserJson>());
         }

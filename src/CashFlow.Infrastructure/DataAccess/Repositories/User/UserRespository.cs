@@ -12,7 +12,7 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories.User
              await _dbContext.Users.AddAsync(user);
         }
 
-        public async Task<bool> ExistsByEmail(string email)
+        public async Task<bool> ExistByEmail(string email)
         {
             return await _dbContext.Users.AnyAsync(u => u.Email == email);
         }
