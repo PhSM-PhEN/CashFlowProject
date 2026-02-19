@@ -1,18 +1,22 @@
 ﻿using CashFlow.Domain.Enuns;
 using CashFlow.Domain.Report;
 using CashFlow.Domain.Repositories.Expense;
+using CashFlow.Domain.Services.LoggedUser;
 using ClosedXML.Excel;
 
 namespace CashFlow.Application.UseCases.ToExpenses.Report.Excel
 {
-    public class GenereteExpenseReportExcelUseCase(IExpensesReadOnlyRepository repository) : IGenereteExpenseReportExcelUseCase
+    public class GenereteExpenseReportExcelUseCase(IExpensesReadOnlyRepository repository,
+        ILoggedUser loggedUser) : IGenereteExpenseReportExcelUseCase
 
     {
         private const string CURRENT_SYMBOL = "R$";
         private readonly IExpensesReadOnlyRepository _repository = repository;
+        private readonly ILoggedUser _loggedUser = loggedUser;
         public async Task<byte[]> Execute(DateOnly month)
         {
-            var expenses = await _repository.FilterByMonth(month);
+            var loggedUser = await _loggedUser.Get();
+            var expenses = await _repository.FilterByMonth(loggedUser, month);
             if (expenses.Count == 0)
             {
                 return [];
@@ -20,7 +24,7 @@ namespace CashFlow.Application.UseCases.ToExpenses.Report.Excel
 
             using var workbook = new XLWorkbook
             {
-                Author = "Paulo Henrique"
+                Author = loggedUser.Name,
             };
 
             workbook.Style.Font.FontName = "Arial";

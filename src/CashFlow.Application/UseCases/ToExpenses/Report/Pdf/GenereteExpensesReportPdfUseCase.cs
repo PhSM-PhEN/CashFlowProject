@@ -4,6 +4,7 @@ using CashFlow.Application.UseCases.ToExpenses.Report.Pdf.Fonts;
 using CashFlow.Domain.Extensions;
 using CashFlow.Domain.Report;
 using CashFlow.Domain.Repositories.Expense;
+using CashFlow.Domain.Services.LoggedUser;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
@@ -19,22 +20,26 @@ namespace CashFlow.Application.UseCases.ToExpenses.Report.Pdf
 
         private const string CURRENT_SIMBOL = "R$";
         private const int HEIGHT_ROW_EXPENSE_TABLE = 25;
-
+        private readonly ILoggedUser _loggedUser;
         private readonly IExpensesReadOnlyRepository _repository;
 
-        public GenereteExpensesReportPdfUseCase(IExpensesReadOnlyRepository respoitory)
+        public GenereteExpensesReportPdfUseCase(IExpensesReadOnlyRepository respoitory,
+            ILoggedUser loggedUser)
         {
+
             _repository = respoitory;
+            _loggedUser = loggedUser;
             GlobalFontSettings.FontResolver = new ExpenseReportFontsResolver();
         }
         public async Task<byte[]> Execute(DateOnly month)
         {
-            var expenses = await _repository.FilterByMonth(month);
+            var loggedUser = await _loggedUser.Get();
+            var expenses = await _repository.FilterByMonth(loggedUser, month);
 
             if (expenses.Count == 0)
                 return [];
 
-            var document = CreatDocument(month);
+            var document = CreatDocument(loggedUser.Name, month);
             var page = CreatePage(document);
 
 
@@ -93,12 +98,12 @@ namespace CashFlow.Application.UseCases.ToExpenses.Report.Pdf
 
             return RenderDocument(document);
         }
-        private static Document CreatDocument(DateOnly month)
+        private static Document CreatDocument(string author ,DateOnly month)
         {
             var document = new Document();
             
             document.Info.Title = ($"{ResourceReportGeneretionMessage.EXPENSE_FOR} {month:Y}");
-
+            document.Info.Author = author;
 
             var style = document.Styles["Normal"];
             style!.Font.Name = FontHelper.RALEWAY_REGULAR;
@@ -118,7 +123,7 @@ namespace CashFlow.Application.UseCases.ToExpenses.Report.Pdf
             section.PageSetup.TopMargin = 80;
             section.PageSetup.BottomMargin = 80;
 
-            
+
 
             return section;
         }
@@ -132,7 +137,7 @@ namespace CashFlow.Application.UseCases.ToExpenses.Report.Pdf
             paragraph.AddFormattedText(title, new Font { Name = FontHelper.RALEWAY_REGULAR, Size = 15, Color = ColorHelper.BLACK });
             paragraph.AddLineBreak();
 
-            paragraph.AddFormattedText($"{totalExpense} {CURRENT_SIMBOL}", new Font { Name = FontHelper.ROBOTO_BLACK, Size = 50 });
+            paragraph.AddFormattedText($"{totalExpense:f2} {CURRENT_SIMBOL}", new Font { Name = FontHelper.ROBOTO_BLACK, Size = 50 });
         }
         private static Table CreateExpenseTable(Section page)
         {
@@ -149,7 +154,7 @@ namespace CashFlow.Application.UseCases.ToExpenses.Report.Pdf
             cell.AddParagraph(expenseTitle);
             cell.Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
 
-            cell.Shading.Color =  ColorHelper.RED_LIGHT;
+            cell.Shading.Color = ColorHelper.RED_LIGHT;
             cell.VerticalAlignment = VerticalAlignment.Center;
             cell.MergeRight = 2;
             cell.Format.LeftIndent = 10;
@@ -178,11 +183,11 @@ namespace CashFlow.Application.UseCases.ToExpenses.Report.Pdf
             };
             cell.Shading.Color = ColorHelper.GREEN_DARK;
             cell.VerticalAlignment = VerticalAlignment.Center;
-            
+
         }
         private static void AddAmountForExpense(Cell cell, decimal amount)
         {
-            cell.AddParagraph($"- {amount} {CURRENT_SIMBOL} ");
+            cell.AddParagraph($"- {amount:f2} {CURRENT_SIMBOL} ");
 
             cell.Format.Font = new Font
             {
@@ -192,7 +197,7 @@ namespace CashFlow.Application.UseCases.ToExpenses.Report.Pdf
             };
             cell.Shading.Color = ColorHelper.WHITE;
             cell.VerticalAlignment = VerticalAlignment.Center;
-            
+
 
         }
         private static void AddWhitSpace(Table table)

@@ -10,9 +10,9 @@ using FluentValidation.Results;
 
 namespace CashFlow.Application.UseCases.ToUser.Register
 {
-    public class RegisterUserUseCase(IMapper mapper, IPasswordEncripter passwordEncripter,
+    public class ChangeRegisterUserUseCase(IMapper mapper, IPasswordEncripter passwordEncripter,
         IUserReadOnlyRespository userRespository, IUserWriteOnlyRespository userWriteOnly, IUnitOfWork unitOfWork,
-        IAccessTokenGenerator tokenGenerator) : IRegisterUserUseCase
+        IAccessTokenGenerator tokenGenerator) : IChangeRegisterUserUseCase
     {
         private readonly IPasswordEncripter _passwordEncripter = passwordEncripter;
         private readonly IMapper _mapper = mapper;

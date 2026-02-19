@@ -17,38 +17,35 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories.ToExpenses
 
         }
 
-        public async Task<bool> Delete(long id)
+        public async Task Delete(long id)
         {
-            var result = await _dbContext.Expenses.FirstOrDefaultAsync(e => e.Id == id);
+            var result = await _dbContext.Expenses.FindAsync(id);
 
-            if (result is null)
-            {
-                return false;
-            }
+            _dbContext.Expenses.Remove(result!);
 
-            _dbContext.Expenses.Remove(result);
-
-            return true;
+            
         }
 
-        public async Task<List<Expenses>> GetAll()
+        public async Task<List<Expenses>> GetAll(Domain.Entities.User user)
         {
-            return await _dbContext.Expenses.AsNoTracking().ToListAsync();
+            return await _dbContext.Expenses.AsNoTracking().Where(expense => expense.UserId == user.Id).ToListAsync();
         }
-        async Task<Expenses?> IExpensesReadOnlyRepository.GetById(long id)
+        async Task<Expenses?> IExpensesReadOnlyRepository.GetById(Domain.Entities.User user ,long id)
         {
-            return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+            return await _dbContext.Expenses
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.Id == id && e.UserId == user.Id);
         }
-        async Task<Expenses?> IExpensesUpdateOnlyRepository.GetById(long id)
+        async Task<Expenses?> IExpensesUpdateOnlyRepository.GetById(Domain.Entities.User user,long id)
         {
-            return await _dbContext.Expenses.FirstOrDefaultAsync(e => e.Id == id);
+            return await _dbContext.Expenses.FirstOrDefaultAsync(e => e.Id == id  && e.UserId == user.Id);
         }
         public void Update(Expenses expense)
         {
             _dbContext.Expenses.Update(expense);
         }
 
-        public async Task<List<Expenses>> FilterByMonth(DateOnly date)
+        public async Task<List<Expenses>> FilterByMonth(Domain.Entities.User user,DateOnly date)
         {
             var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date;
 
@@ -58,7 +55,7 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories.ToExpenses
 
             return await _dbContext.Expenses
                 .AsNoTracking()
-                .Where(expenses => expenses.Date >= startDate && expenses.Date <= endDate)
+                .Where( expenses => expenses.UserId == user.Id && expenses.Date >= startDate && expenses.Date <= endDate)
                 .OrderBy(expense => expense.Date)
                 .ToListAsync();
         }

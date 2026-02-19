@@ -18,6 +18,7 @@ namespace CashFlow.Infrastructure.Security.Token
             {
                 new(ClaimTypes.Name, user.Name),
                 new(ClaimTypes.Sid, user.UserIdentifier.ToString()),
+                new(ClaimTypes.Role, user.Role)
                 
             };
 

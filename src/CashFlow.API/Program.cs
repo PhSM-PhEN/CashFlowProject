@@ -1,7 +1,10 @@
 using CashFlow.API.Filters;
 using CashFlow.API.Middleware;
+using CashFlow.API.Token;
 using CashFlow.Application.UseCases.ToExpenses;
+using CashFlow.Domain.Security.Token;
 using CashFlow.Infrastructure;
+using CashFlow.Infrastructure.Extensions;
 using CashFlow.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -54,7 +57,13 @@ builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)))
 
 builder.Services.AddRouting(config => config.LowercaseUrls = true);//configura as rotas para serem em letras minúsculas
 builder.Services.AddInfrastructureServices(builder.Configuration);//adiciona os serviços de infraestrutura ao contêiner de injeção de dependência
+
 builder.Services.AddApplicationServices();//adiciona os serviços de aplicação ao contêiner de injeção de dependência
+
+builder.Services.AddScoped<ITokenProvider, HttpcontextTokenValue>();//registra a implementação do ITokenProvider para ser injetada onde necessário
+
+builder.Services.AddHttpContextAccessor();
+
 
 
 builder.Services.AddAuthentication(config =>
@@ -95,7 +104,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-await MigrateDataBase();
+if (builder.Configuration.IsTestiEnviroment() == false)
+{
+
+
+    await MigrateDataBase();
+}
 
 app.Run();
 
@@ -107,3 +121,4 @@ async Task MigrateDataBase()
 
 
 }
+public partial class Program { }

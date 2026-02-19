@@ -2,12 +2,16 @@
 using CashFlow.Communication.Request.ToExpenses;
 using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expense;
+using CashFlow.Domain.Services.LoggedUser;
 using CashFlow.Exception.ExceptionBase;
 
 namespace CashFlow.Application.UseCases.ToExpenses.Update
 {
-    public class UpdateExpensesUseCase(IMapper mapper, IUnitOfWork unitOfWork, IExpensesUpdateOnlyRepository repository) : IUpdateExpensesUseCase
+    public class UpdateExpensesUseCase(IMapper mapper, IUnitOfWork unitOfWork, 
+        IExpensesUpdateOnlyRepository repository,
+        ILoggedUser logged) : IUpdateExpensesUseCase
     {
+        private readonly ILoggedUser _logged = logged;
         private readonly IMapper _mapper = mapper;
         private readonly IExpensesUpdateOnlyRepository _repository = repository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -17,9 +21,11 @@ namespace CashFlow.Application.UseCases.ToExpenses.Update
 
             Validate(request);
 
-            var expense = await _repository.GetById(id);
+            var loggedUser = await _logged.Get();
 
-            if (expense == null)
+            var expense = await _repository.GetById(loggedUser ,id);
+
+            if (expense is null)
             {
                 throw new NotFoundExcepiton(ResourceErrorMessages.EXPENSE_NOT_FOUND);
             }

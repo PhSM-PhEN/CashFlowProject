@@ -3,10 +3,13 @@ using CashFlow.Domain.Repositories.Expense;
 using CashFlow.Domain.Repositories.User;
 using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Domain.Security.Token;
+using CashFlow.Domain.Services.LoggedUser;
 using CashFlow.Infrastructure.DataAccess;
 using CashFlow.Infrastructure.DataAccess.Repositories.ToExpenses;
 using CashFlow.Infrastructure.DataAccess.Repositories.User;
+using CashFlow.Infrastructure.Extensions;
 using CashFlow.Infrastructure.Security.Token;
+using CashFlow.Infrastructure.Services.LoggedUser;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,13 +20,19 @@ namespace CashFlow.Infrastructure
     {
         public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)        // this e usado para criar um metodo de extensao
         {
-           
-            AddDataContexts(services, configuration);
+
+            services.AddScoped<IPasswordEncripter, Security.Criptography.BCrypt>(); //registra a implementação do encriptador de senha no contêiner de injeção de dependência
+            services.AddScoped<ILoggedUser, LoggedUser>(); //registra a implementação do serviço de usuário logado no contêiner de injeção de dependência
+
             AddToken(services, configuration);
             AddRepositories(services);
             
+            if(configuration.IsTestiEnviroment() == false)
+            {
+                AddDataContexts(services, configuration);
+            }
 
-            services.AddScoped<IPasswordEncripter, Security.Criptography.BCrypt>(); //registra a implementação do encriptador de senha no contêiner de injeção de dependência
+            
 
         }
         private static void AddToken( IServiceCollection services, IConfiguration configuration)
@@ -42,13 +51,14 @@ namespace CashFlow.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();    //registra a implementação da unidade de trabalho no contêiner de injeção de dependência
             services.AddScoped<IUserReadOnlyRespository, UserRespository>();//registra a implementação do repositório de usuário no contêiner de injeção de dependência
             services.AddScoped<IUserWriteOnlyRespository, UserRespository>();//registra a implementação do repositório de usuário no contêiner de injeção de dependência
+
         }
 
         private static void AddDataContexts(IServiceCollection services, IConfiguration configuration)
         {
             var connectionString =  configuration.GetConnectionString("connection");
 
-            var serverVersion = new MySqlServerVersion(new Version(8, 0, 36));
+            var serverVersion = ServerVersion.AutoDetect(connectionString);
 
             services.AddDbContext<CashFlowDbContext>(config => config.UseMySql(connectionString, serverVersion));
         }

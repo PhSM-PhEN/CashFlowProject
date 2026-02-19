@@ -3,7 +3,7 @@ using CashFlow.Communication.Responses.ToUser;
 
 namespace CashFlow.Application.UseCases.ToUser.Register
 {
-    public interface IRegisterUserUseCase
+    public interface IChangeRegisterUserUseCase
     {
         Task<ResponseRegisterUserJson> Execute(RequestRegisterUserJson request);
     }

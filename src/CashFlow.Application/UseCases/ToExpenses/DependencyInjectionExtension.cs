@@ -32,7 +32,7 @@ namespace CashFlow.Application.UseCases.ToExpenses
             services.AddScoped<IUpdateExpensesUseCase, UpdateExpensesUseCase>();
             services.AddScoped<IGenereteExpenseReportExcelUseCase, GenereteExpenseReportExcelUseCase>();
             services.AddScoped<IGenereteExpensesReportPdfUseCase, GenereteExpensesReportPdfUseCase>();
-            services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+            services.AddScoped<IChangeRegisterUserUseCase, ChangeRegisterUserUseCase>();
             services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
             
         }

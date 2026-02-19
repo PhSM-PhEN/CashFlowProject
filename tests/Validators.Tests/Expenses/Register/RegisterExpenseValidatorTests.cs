@@ -13,7 +13,7 @@ namespace Validators.Tests.Expenses.Register
             // Arrange
 
             var validator = new ExpenseValidation();// Instantiate the validator
-            var request = RequestRegisterExpenseJsonBuilder.Build();
+            var request = RequestExpenseJsonBuilder.Build();
 
             // Act
 
@@ -29,7 +29,7 @@ namespace Validators.Tests.Expenses.Register
         {
             // Arrange
             var validator = new ExpenseValidation();// Instantiate the validator
-            var request = RequestRegisterExpenseJsonBuilder.Build();
+            var request = RequestExpenseJsonBuilder.Build();
             request.Title = string.Empty;
             // Act
             var result = validator.Validate(request);// Validate the request using the validator
@@ -45,7 +45,7 @@ namespace Validators.Tests.Expenses.Register
         {
             // Arrange
             var validator = new ExpenseValidation();// Instantiate the validator
-            var request = RequestRegisterExpenseJsonBuilder.Build();
+            var request = RequestExpenseJsonBuilder.Build();
             request.Amount = 0;
             // Act
             var result = validator.Validate(request);// Validate the request using the validator
@@ -59,7 +59,7 @@ namespace Validators.Tests.Expenses.Register
         {
             // Arrange
             var validator = new ExpenseValidation();// Instantiate the validator
-            var request = RequestRegisterExpenseJsonBuilder.Build();
+            var request = RequestExpenseJsonBuilder.Build();
             request.Date = DateTime.Now.AddDays(1); // Set date to future
             // Act
             var result = validator.Validate(request);// Validate the request using the validator
@@ -73,7 +73,7 @@ namespace Validators.Tests.Expenses.Register
         {
             // Arrange
             var validator = new ExpenseValidation();// Instantiate the validator
-            var request = RequestRegisterExpenseJsonBuilder.Build();
+            var request = RequestExpenseJsonBuilder.Build();
             request.PaymentType = (CashFlow.Communication.Enums.PaymentTypeEnum)999; // Invalid enum value
             // Act
             var result = validator.Validate(request);// Validate the request using the validator

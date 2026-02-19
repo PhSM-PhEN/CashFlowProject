@@ -18,9 +18,4 @@
     <ProjectReference Include="..\..\src\CashFlow.Infrastructure\CashFlow.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Expenses\" />
-    <Folder Include="LoggedUser\" />
-  </ItemGroup>
-
 </Project>

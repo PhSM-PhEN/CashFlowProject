@@ -60,7 +60,7 @@ namespace UseCase.Tests.ToUsers.Register
             
         }
 
-        private static RegisterUserUseCase CreateUseCase(string? email = null)
+        private static ChangeRegisterUserUseCase CreateUseCase(string? email = null)
         {
             var mapper = MappperBuilder.Build();
             var unitofwork = UnitOfWorkBuilder.Build();
@@ -75,7 +75,7 @@ namespace UseCase.Tests.ToUsers.Register
             }
              
 
-            return new RegisterUserUseCase(mapper, passwordEncripter, userReadOnlyRepository.Build(), writeRespository, unitofwork, token);
+            return new ChangeRegisterUserUseCase(mapper, passwordEncripter, userReadOnlyRepository.Build(), writeRespository, unitofwork, token);
         }
     }
 }
