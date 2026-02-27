@@ -1,4 +1,4 @@
-﻿using CashFlow.Domain.Repositories.User;
+﻿using CashFlow.Domain.Repositories.ToUser;
 using Moq;
 
 namespace CommonTestUtilities.Repositories

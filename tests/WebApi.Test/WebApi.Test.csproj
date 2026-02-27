@@ -36,7 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ToExpenses\Delete\" />
     <Folder Include="ToExpenses\GetAll\" />
     <Folder Include="ToExpenses\GetById\" />
     <Folder Include="ToExpenses\Report\" />

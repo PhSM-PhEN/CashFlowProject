@@ -3,7 +3,7 @@ using CashFlow.Application.AutoMapper;
 
 namespace CommonTestUtilities.Mapper
 {
-    public  class MappperBuilder
+    public  class MapperBuilder
     { 
         public static IMapper Build()
         {

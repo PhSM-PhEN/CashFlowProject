@@ -3,7 +3,7 @@ using CashFlow.Exception.ExceptionBase;
 using CommonTestUtilities.Resquests;
 using Shouldly;
 
-namespace Validators.Tests.Expenses.Register
+namespace Validators.Tests.ToExpenses.Register
 {
     public class RegisterExpenseValidatorTests
     {

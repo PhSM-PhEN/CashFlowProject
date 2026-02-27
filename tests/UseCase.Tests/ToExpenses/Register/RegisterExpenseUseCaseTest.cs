@@ -57,8 +57,8 @@ namespace UseCase.Tests.ToExpenses.Register
 
         private static RegisterExpenseUseCase CreateUseCase(CashFlow.Domain.Entities.User user)
         {
-            var repository = ExpenseWriteOnlyRepositoryBuilder.Build();
-            var mapper = MappperBuilder.Build();
+            var repository = ExpenseWriteOnlyRepositoryBuild.Build();
+            var mapper = MapperBuilder.Build();
             var unitOfWork = UnitOfWorkBuilder.Build();
             var loggedUser = LoggedUserBuilder.Build(user);
 

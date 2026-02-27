@@ -1,4 +1,4 @@
-﻿namespace CashFlow.Domain.Repositories.User
+﻿namespace CashFlow.Domain.Repositories.ToUser
 {
     public interface IUserReadOnlyRespository
     {

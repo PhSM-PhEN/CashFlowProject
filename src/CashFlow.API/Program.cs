@@ -1,7 +1,7 @@
 using CashFlow.API.Filters;
 using CashFlow.API.Middleware;
 using CashFlow.API.Token;
-using CashFlow.Application.UseCases.ToExpenses;
+using CashFlow.Application.UseCases;
 using CashFlow.Domain.Security.Token;
 using CashFlow.Infrastructure;
 using CashFlow.Infrastructure.Extensions;

@@ -2,7 +2,7 @@
 using CashFlow.Communication.Request.ToUser;
 using CashFlow.Communication.Responses.ToUser;
 using CashFlow.Domain.Repositories;
-using CashFlow.Domain.Repositories.User;
+using CashFlow.Domain.Repositories.ToUser;
 using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Domain.Security.Token;
 using CashFlow.Exception.ExceptionBase;
@@ -10,9 +10,9 @@ using FluentValidation.Results;
 
 namespace CashFlow.Application.UseCases.ToUser.Register
 {
-    public class ChangeRegisterUserUseCase(IMapper mapper, IPasswordEncripter passwordEncripter,
+    public class RegisterUserUseCase(IMapper mapper, IPasswordEncripter passwordEncripter,
         IUserReadOnlyRespository userRespository, IUserWriteOnlyRespository userWriteOnly, IUnitOfWork unitOfWork,
-        IAccessTokenGenerator tokenGenerator) : IChangeRegisterUserUseCase
+        IAccessTokenGenerator tokenGenerator) : IRegisterUserUseCase
     {
         private readonly IPasswordEncripter _passwordEncripter = passwordEncripter;
         private readonly IMapper _mapper = mapper;

@@ -1,6 +1,6 @@
 ﻿using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expense;
-using CashFlow.Domain.Repositories.User;
+using CashFlow.Domain.Repositories.ToUser;
 using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Domain.Security.Token;
 using CashFlow.Domain.Services.LoggedUser;
@@ -51,6 +51,7 @@ namespace CashFlow.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();    //registra a implementação da unidade de trabalho no contêiner de injeção de dependência
             services.AddScoped<IUserReadOnlyRespository, UserRespository>();//registra a implementação do repositório de usuário no contêiner de injeção de dependência
             services.AddScoped<IUserWriteOnlyRespository, UserRespository>();//registra a implementação do repositório de usuário no contêiner de injeção de dependência
+            services.AddScoped<IUserUpdateOnlyRepository, UserRespository>();
 
         }
 

@@ -1,6 +1,6 @@
 ﻿using CashFlow.Communication.Request.ToLogin;
 using CashFlow.Communication.Responses.ToUser;
-using CashFlow.Domain.Repositories.User;
+using CashFlow.Domain.Repositories.ToUser;
 using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Domain.Security.Token;
 using CashFlow.Exception.ExceptionBase;

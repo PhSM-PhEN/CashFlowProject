@@ -7,10 +7,13 @@ using CashFlow.Application.UseCases.ToExpenses.Report.Excel;
 using CashFlow.Application.UseCases.ToExpenses.Report.Pdf;
 using CashFlow.Application.UseCases.ToExpenses.Update;
 using CashFlow.Application.UseCases.ToLogin;
+using CashFlow.Application.UseCases.ToUser.Delete;
+using CashFlow.Application.UseCases.ToUser.GetUser;
 using CashFlow.Application.UseCases.ToUser.Register;
+using CashFlow.Application.UseCases.ToUser.Update;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CashFlow.Application.UseCases.ToExpenses
+namespace CashFlow.Application.UseCases
 {
     public static class DependencyInjectionExtension
     {
@@ -32,8 +35,12 @@ namespace CashFlow.Application.UseCases.ToExpenses
             services.AddScoped<IUpdateExpensesUseCase, UpdateExpensesUseCase>();
             services.AddScoped<IGenereteExpenseReportExcelUseCase, GenereteExpenseReportExcelUseCase>();
             services.AddScoped<IGenereteExpensesReportPdfUseCase, GenereteExpensesReportPdfUseCase>();
-            services.AddScoped<IChangeRegisterUserUseCase, ChangeRegisterUserUseCase>();
+            services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
             services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
+            services.AddScoped<IGetUserUseProfileCase, GetUserProfileUseCase>();
+            services.AddScoped<IDeleteUserAccountUseCase, DeleteUserAccountUseCase>();
+            services.AddScoped<IUpdateProfileUseCase, UpdateProfileUseCase>();
+
             
         }
     }
