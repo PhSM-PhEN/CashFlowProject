@@ -1,4 +1,5 @@
 ﻿using CashFlow.Domain.Entities;
+using CashFlow.Domain.Enuns;
 using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Domain.Security.Token;
 using CashFlow.Infrastructure.DataAccess;
@@ -84,7 +85,7 @@ namespace WebApi.Test
         }
         private User AddUserAdmin(CashFlowDbContext cashFlowDbContext, IPasswordEncripter passwordEncripter, IAccessTokenGenerator tokenGenerator)
         {
-            var user = UserBuilder.Build();
+            var user = UserBuilder.Build(Roles.ADMIN);
             user.Id = 2;
             var password = user.Password;
             user.Password = passwordEncripter.Encrypt(password);

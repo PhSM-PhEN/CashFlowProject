@@ -10,7 +10,7 @@ using System.Text.Json;
 using WebApi.Test.InlineData;
 
 
-namespace WebApi.Test.Users.ToUsers
+namespace WebApi.Test.ToUsers.Register
 {
     public class RegisterUserTest :CashflowClassFixture
     {

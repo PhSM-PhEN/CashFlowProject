@@ -16,7 +16,7 @@ namespace CashFlow.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> GetExecel(
-            [FromHeader] DateOnly month,
+            [FromQuery] DateOnly month,
             [FromServices] IGenereteExpenseReportExcelUseCase useCase)
         {
 
@@ -33,7 +33,7 @@ namespace CashFlow.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> GetPdf(
-            [FromHeader] DateOnly month,
+            [FromQuery] DateOnly month,
             [FromServices] IGenereteExpensesReportPdfUseCase useCase)
         {
             byte[] file = await useCase.Execute(month);

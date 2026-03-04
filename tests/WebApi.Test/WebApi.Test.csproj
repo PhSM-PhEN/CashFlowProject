@@ -35,11 +35,4 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ToExpenses\GetAll\" />
-    <Folder Include="ToExpenses\GetById\" />
-    <Folder Include="ToExpenses\Report\" />
-    <Folder Include="ToExpenses\Upadate\" />
-  </ItemGroup>
-
 </Project>

@@ -1,4 +1,5 @@
-﻿using CashFlow.Application.UseCases.ToUser.Delete;
+﻿using CashFlow.Application.UseCases.ToUser.ChangePassword;
+using CashFlow.Application.UseCases.ToUser.Delete;
 using CashFlow.Application.UseCases.ToUser.GetUser;
 using CashFlow.Application.UseCases.ToUser.Register;
 using CashFlow.Application.UseCases.ToUser.Update;
@@ -48,6 +49,16 @@ namespace CashFlow.API.Controllers
             await useCase.Execute(request);
             return NoContent();
 
+        }
+        [HttpPut("passwordChang")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ChangePassword([FromServices] IChangePasswordUseCase useCase,
+            [FromBody] RequestChangePasswordJson request)
+        {
+            await useCase.Execute(request);
+            return NoContent();
         }
         [HttpDelete]
         [Authorize]
