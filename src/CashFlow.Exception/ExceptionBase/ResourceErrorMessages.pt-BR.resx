@@ -144,6 +144,9 @@
   <data name="PAYMENT_TYPE_IS_INVALID" xml:space="preserve">
     <value>Tipo de pagamento invalido</value>
   </data>
+  <data name="TAG_TYPE_IS_NOT_SUPPORTED" xml:space="preserve">
+    <value>Tipo de tag não suportada</value>
+  </data>
   <data name="THE_AMOUNT_MUST_THAN_ZERO" xml:space="preserve">
     <value>O valor deve ser maior que zero</value>
   </data>

@@ -20,7 +20,6 @@ namespace CashFlow.Infrastructure.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Value = table.Column<int>(type: "int", nullable: false),
-                    ExpenseId = table.Column<long>(type: "bigint", nullable: false),
                     ExpensesId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

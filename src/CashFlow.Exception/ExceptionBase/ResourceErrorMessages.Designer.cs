@@ -142,6 +142,15 @@ namespace CashFlow.Exception.ExceptionBase {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tag type is not supported.
+        /// </summary>
+        public static string TAG_TYPE_IS_NOT_SUPPORTED {
+            get {
+                return ResourceManager.GetString("TAG_TYPE_IS_NOT_SUPPORTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The amount must than zero.
         /// </summary>
         public static string THE_AMOUNT_MUST_THAN_ZERO {

@@ -9,6 +9,7 @@ namespace CashFlow.Communication.Request.ToExpenses
         public DateTime Date { get; set; }
         public decimal Amount { get; set; }
         public PaymentTypeEnum PaymentType { get; set; }
+        public IList<TagEnum> Tags { get; set; } = [];
     }
 
 }

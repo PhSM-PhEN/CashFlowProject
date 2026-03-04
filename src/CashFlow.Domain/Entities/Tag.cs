@@ -8,7 +8,7 @@ namespace CashFlow.Domain.Entities
 
         public TagEnum Value { get; set; }
 
-        public long ExpenseId { get; set; }
+        public long ExpensesId { get; set; }
         public Expenses Expenses { get; set; } = default!;
     }
 }

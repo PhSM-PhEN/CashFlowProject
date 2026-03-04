@@ -64,9 +64,6 @@ namespace CashFlow.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("ExpenseId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("ExpensesId")
                         .HasColumnType("bigint");
 

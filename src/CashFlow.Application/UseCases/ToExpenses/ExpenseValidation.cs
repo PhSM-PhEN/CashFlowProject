@@ -15,6 +15,11 @@ namespace CashFlow.Application.UseCases.ToExpenses
             RuleFor(x => x.Date)
                 .LessThanOrEqualTo(DateTime.Now).WithMessage(ResourceErrorMessages.EXPENSES_CANNOT_BE_FOR_THE_FUTURE);
             RuleFor(x => x.PaymentType).IsInEnum().WithMessage( ResourceErrorMessages.PAYMENT_TYPE_IS_INVALID);
+            RuleFor(x => x.Tags).ForEach(role =>
+            {
+                role.IsInEnum().WithMessage(ResourceErrorMessages.TAG_TYPE_IS_NOT_SUPPORTED);
+            });
+
         }
     }
 }
