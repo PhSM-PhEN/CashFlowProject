@@ -4,12 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CashFlow.Infrastructure.DataAccess
 {
-    // deixar internal para não expor a implementação fora do projeto de infraestrutura
+    
     public class CashFlowDbContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<Expenses> Expenses { get; set; }
-
         public DbSet<User> Users { get; set; }
+
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Tag>().ToTable("Tags");
+        }
 
 
     }
