@@ -30,6 +30,7 @@ namespace CashFlow.Application.UseCases.ToExpenses.Update
                 throw new NotFoundExcepiton(ResourceErrorMessages.EXPENSE_NOT_FOUND);
             }
 
+            expense.Tags.Clear();
 
             _mapper.Map(request, expense);
 

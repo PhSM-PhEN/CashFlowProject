@@ -83,7 +83,22 @@ namespace Validators.Tests.ToExpenses.Register
             result.Errors.ToList().First().ErrorMessage.ShouldBe(ResourceErrorMessages.PAYMENT_TYPE_IS_INVALID);
             result.Errors.ShouldContain(e => e.PropertyName == "PaymentType");
         }
-        
+        [Fact]
+        public void Fail_Tag_Invalid()
+        {
+            var validator = new ExpenseValidation();
+            var request = RequestExpenseJsonBuilder.Build();
+            request.Tags.Add((CashFlow.Communication.Enums.TagEnum)122);
+
+
+            var result = validator.Validate(request);
+
+            result.IsValid.ShouldBeFalse();
+
+            result.Errors.ToList().First().ErrorMessage.ShouldBe(ResourceErrorMessages.TAG_TYPE_IS_NOT_SUPPORTED);
+
+
+        }
 
 
     }

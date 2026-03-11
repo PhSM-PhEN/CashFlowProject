@@ -53,12 +53,12 @@ namespace WebApi.Test
         private void StartDataBase(CashFlowDbContext dbContext, IPasswordEncripter passwordEncripter, IAccessTokenGenerator tokenGenerator)
         {
             var userTeamMember = AddUserTeamMember(dbContext, passwordEncripter, tokenGenerator);
-            var expenseTeamMember = AddExpense(dbContext, userTeamMember, expenseId: 1);
+            var expenseTeamMember = AddExpense(dbContext, userTeamMember, expenseId: 1, tagId: 1);
 
             EXPENSE_MEMBER_TIME = new ExpenseIdentityManegarn(expenseTeamMember);
 
             var userAdmin = AddUserAdmin(dbContext, passwordEncripter, tokenGenerator);
-            var expenseAdmin = AddExpense(dbContext, userAdmin, expenseId: 2);
+            var expenseAdmin = AddExpense(dbContext, userAdmin, expenseId: 2, tagId: 2);
     
             EXPENSE_ADMIN = new ExpenseIdentityManegarn(expenseAdmin);
 
@@ -99,10 +99,17 @@ namespace WebApi.Test
             return user;
 
         }
-        private static Expenses AddExpense(CashFlowDbContext dbContext, User user, long expenseId)
+        private static Expenses AddExpense(CashFlowDbContext dbContext, User user, long expenseId, long tagId)
         {
             var expense = ExpenseBuilder.Build(user);
             expense.Id = expenseId;
+
+            foreach (var tag in expense.Tags)
+            {
+                tag.Id = tagId;
+                tag.ExpensesId = expenseId;
+            }
+
             dbContext.Expenses.Add(expense);
 
             return expense;

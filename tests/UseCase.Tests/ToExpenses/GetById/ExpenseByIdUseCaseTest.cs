@@ -22,6 +22,14 @@ namespace UseCase.Tests.ToExpenses.GetById
             var result = await useCase.Execute(expense.Id);
 
             result.ShouldNotBeNull();
+            result.Id.ShouldBe(expense.Id);
+            result.Title.ShouldBe(expense.Title);
+            result.Description.ShouldBe(expense.Description);
+            result.Date.ShouldBe(expense.Date);
+            result.Amount.ShouldBe(expense.Amount);
+            result.PaymentType.ShouldBe((CashFlow.Communication.Enums.PaymentTypeEnum)expense.PaymentType);
+            result.Tags.ShouldNotBeEmpty();
+            
 
         }
         [Fact]

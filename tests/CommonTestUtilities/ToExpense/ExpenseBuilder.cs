@@ -33,6 +33,12 @@ namespace CommonTestUtilities.ToExpense
                 .RuleFor(exp => exp.Amount, f => f.Random.Decimal(1, 2000))
                 .RuleFor(exp => exp.Date, f => f.Date.Past(1))
                 .RuleFor(exp => exp.PaymentType, f => f.PickRandom<CashFlow.Domain.Enuns.PaymentTypeEnum>())
+                .RuleFor(exp => exp.Tags, f => f.Make(1, () => new CashFlow.Domain.Entities.Tag
+                {
+                    Id = 1,
+                    Value = f.PickRandom<CashFlow.Domain.Enuns.TagEnum>(),
+                    ExpensesId = 1,
+                }))
                 .RuleFor(exp => exp.UserId, _ = user.Id);
 
 
