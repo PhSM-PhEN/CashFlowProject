@@ -4,9 +4,12 @@ using CashFlow.API.Token;
 using CashFlow.Application.UseCases;
 using CashFlow.Domain.Security.Token;
 using CashFlow.Infrastructure;
+using CashFlow.Infrastructure.DataAccess;
 using CashFlow.Infrastructure.Extensions;
 using CashFlow.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -85,9 +88,20 @@ builder.Services.AddAuthentication(config =>
     };
 });//adiciona os serviços de autenticação ao contêiner de injeção de dependência
 
+builder.Services.AddHealthChecks().AddDbContextCheck<CashFlowDbContext>();
+
 var app = builder.Build();
 
+app.MapHealthChecks("/Health", new HealthCheckOptions
+{
+    AllowCachingResponses = false,
+    ResultStatusCodes =
+    {
+        [HealthStatus.Healthy] = StatusCodes.Status200OK,
+        [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable,
 
+    }
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
