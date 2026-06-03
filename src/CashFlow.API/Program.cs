@@ -65,8 +65,7 @@ builder.Services.AddApplicationServices();//adiciona os serviços de aplicação ao
 
 builder.Services.AddScoped<ITokenProvider, HttpcontextTokenValue>();//registra a implementação do ITokenProvider para ser injetada onde necessário
 
-builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddHttpContextAccessor(); //registra o serviço de acesso ao contexto HTTP para ser injetado onde necessário
 
 
 builder.Services.AddAuthentication(config =>

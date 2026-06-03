@@ -9,7 +9,7 @@ using FluentValidation.Results;
 
 namespace CashFlow.Application.UseCases.ToUser.ChangePassword
 {
-    public class ChangePasswordUseCase(ILoggedUser loggedUser, IUserUpdateOnlyRepository userUpdate, IUnitOfWork unitOfWork, IPasswordEncripter encripter ) : IChangePasswordUseCase
+    public class ChangePasswordUseCase(ILoggedUser loggedUser, IUserUpdateOnlyRepository userUpdate, IUnitOfWork unitOfWork, IPasswordEncripter encripter) : IChangePasswordUseCase
     {
         private readonly ILoggedUser _loggedUser = loggedUser;
         private readonly IUserUpdateOnlyRepository _userUpdateOnly = userUpdate;
@@ -21,14 +21,14 @@ namespace CashFlow.Application.UseCases.ToUser.ChangePassword
 
             Validate(request, loggedUser);
 
-            var user  = await _userUpdateOnly.GetById(loggedUser.Id);
+            var user = await _userUpdateOnly.GetById(loggedUser.Id);
 
             user.Password = _passwordEncripter.Encrypt(request.NewPassword);
 
             _userUpdateOnly.Update(user);
 
             await _unitOfWork.Commit();
-            
+
         }
         private void Validate(RequestChangePasswordJson request, User user)
         {
@@ -38,13 +38,13 @@ namespace CashFlow.Application.UseCases.ToUser.ChangePassword
 
             var passwordMatch = _passwordEncripter.Verify(request.Password, user.Password);
 
+
+
             if (passwordMatch == false)
             {
-                if (passwordMatch == false)
-                {
-                    result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.EMAIL_OR_PASSWORD_INVALID));
-                }
+                result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.EMAIL_OR_PASSWORD_INVALID));
             }
+
             if (result.IsValid == false)
             {
                 var erros = result.Errors.Select(e => e.ErrorMessage).ToList();
